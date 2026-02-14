@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen Z Translator 3000 🤖✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main Landing Page with Room Background -->
+    <div id="modeScreen" class="mode-screen">
+        <!-- Room Background Image -->
+        <img src="assets/room_background.png" class="room-bg" alt="Room Background">
+        
+        <!-- Animated Golden Title -->
+        <div class="title-container">
+            <h1 class="glitch-title" data-text="Gen Z AI">Gen Z AI</h1>
+            <p class="tagline-pop">because basic is illegal</p>
+        </div>
+
+        <!-- Centered Buttons Container (Animated Floating Entry) -->
+        <div class="buttons-container">
+            <button id="chatMode" class="gold-btn chat-btn">
+                <i class="fas fa-comments"></i>
+                <span>Chat</span>
+                <div class="btn-glow"></div>
+            </button>
+            <button id="translateMode" class="gold-btn translate-btn">
+                <i class="fas fa-language"></i>
+                <span>Translate</span>
+                <div class="btn-glow"></div>
+            </button>
+        </div>
+
+        <!-- System Status -->
+        <div class="system-status">
+            <span class="status-dot"></span>
+            <span class="status-text">SYSTEM ONLINE</span>
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div class="chat-container" id="chatUI" style="display: none;">
+        <!-- Robot Section -->
+        <div class="robot-section">
+            <div class="floating-tag" id="floatingTag">
+                <span class="tag-icon">✨</span>
+                <span class="tag-text">Certified Delulu AI</span>
+            </div>
+            <div class="robot-wrapper">
+                <!-- Six_Seven.gif - Main character (default) -->
+                <img src="assets/Six_Seven.gif" 
+                     class="robot main-robot" 
+                     alt="Robot" 
+                     id="robotMain" 
+                     style="display: block;">
+                <!-- IMG_3206.gif - Normal talking mode -->
+                <img src="assets/IMG_3206.gif" 
+                     class="robot talking-robot" 
+                     alt="Robot Talking" 
+                     id="robotTalking" 
+                     style="display: none;">
+                <!-- IMG_3241.gif - Thinking mode -->
+                <img src="assets/IMG_3241.gif" 
+                     class="robot thinking-robot" 
+                     alt="Robot Thinking" 
+                     id="robotThinking" 
+                     style="display: none;">
+                <div class="thinking-indicator" id="thinkingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <h2>Delulu Core 🐍</h2>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <button id="backBtn" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Change Mode
+                </button>
+                <span id="modeIndicator" class="mode-indicator">👥 Chat Mode</span>
+            </div>
+
+            <div class="chat-box" id="chatBox"></div>
+
+            <div class="input-section">
+                <input type="text" id="userInput" placeholder="Say something boring..." autocomplete="off">
+                <button id="sendBtn">
+                    <span>Send</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
