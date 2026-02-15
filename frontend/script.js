@@ -1,11 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("✨ Delulu Core Loaded");
-
-    // ===== ADDED: Session management =====
-    let sessionId = localStorage.getItem('genzSessionId') || 'user_' + Date.now();
-    localStorage.setItem('genzSessionId', sessionId);
-    // ====================================
-
+// Wait for page to load
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("✅ Script loaded successfully!");
+    
     // DOM Elements
     const modeScreen = document.getElementById("modeScreen");
     const chatUI = document.getElementById("chatUI");
@@ -18,18 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const modeIndicator = document.getElementById("modeIndicator");
     const floatingTag = document.getElementById("floatingTag");
     
-    // GIF Elements - CORRECT ORDER
-    const robotMain = document.getElementById("robotMain");          // FIRST: Six_Seven.gif (default/idle)
-    const robotThinking = document.getElementById("robotThinking");  // SECOND: IMG_3241.gif (while AI is thinking)
-    const robotTalking = document.getElementById("robotTalking");    // THIRD: IMG_3206.gif (random response - talking)
-    const robotOk = document.getElementById("robotOk");              // FOURTH: A_ok.gif (random response - ok gesture)
-
+    // GIF Elements
+    const robotMain = document.getElementById("robotMain");
+    const robotThinking = document.getElementById("robotThinking");
+    const robotTalking = document.getElementById("robotTalking");
     const thinkingIndicator = document.getElementById("thinkingIndicator");
 
+    // Session management
+    let sessionId = localStorage.getItem('genzSessionId') || 'user_' + Date.now();
+    localStorage.setItem('genzSessionId', sessionId);
+    
     let currentMode = null;
     let typingTimer;
-    let messageCount = 0;
-    let isWaitingForResponse = false;  // Already exists, keep it
+    let isWaitingForResponse = false;
 
     // Floating tag messages
     const tagMessages = [
@@ -51,86 +48,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 8000);
 
     // ========================================
-    // GIF STATE MANAGEMENT - CORRECTED ORDER
+    // GIF STATE MANAGEMENT
     // ========================================
     
-    // FIRST: Six_Seven.gif - Default/Idle state
     function showMainRobot() {
-        console.log("🎭 STATE: IDLE - Showing Six_Seven.gif (main robot)");
+        console.log("🎭 Showing Six_Seven.gif (main robot)");
         robotMain.style.display = "block";
         robotThinking.style.display = "none";
         robotTalking.style.display = "none";
-        robotOk.style.display = "none";
         thinkingIndicator.classList.remove("show");
     }
 
-    // SECOND: IMG_3241.gif - Thinking state (when AI is processing)
     function showThinkingRobot() {
-        console.log("💭 STATE: THINKING - Showing IMG_3241.gif (thinking robot)");
+        console.log("💭 Showing IMG_3241.gif (thinking robot)");
         robotMain.style.display = "none";
         robotThinking.style.display = "block";
         robotTalking.style.display = "none";
-        robotOk.style.display = "none";
         thinkingIndicator.classList.add("show");
         isWaitingForResponse = true;
     }
 
-    // THIRD: IMG_3206.gif - Talking state (response option 1)
     function showTalkingRobot() {
-        console.log("💬 STATE: TALKING - Showing IMG_3206.gif (talking robot)");
+        console.log("💬 Showing IMG_3206.gif (talking robot)");
         robotMain.style.display = "none";
         robotThinking.style.display = "none";
         robotTalking.style.display = "block";
-        robotOk.style.display = "none";
         thinkingIndicator.classList.remove("show");
-    }
-
-    // FOURTH: A_ok.gif - OK gesture state (response option 2)
-    function showOkRobot() {
-        console.log("👌 STATE: OK GESTURE - Showing A_ok.gif (ok robot)");
-        robotMain.style.display = "none";
-        robotThinking.style.display = "none";
-        robotTalking.style.display = "none";
-        robotOk.style.display = "block";
-        thinkingIndicator.classList.remove("show");
-    }
-
-    // Random response selector - 50/50 chance between talking and OK
-    function showRandomResponseRobot() {
-        const random = Math.random();
-        if (random < 0.5) {
-            showTalkingRobot(); // 50% chance - IMG_3206.gif
-        } else {
-            showOkRobot();      // 50% chance - A_ok.gif
-        }
     }
 
     // ========================================
-    // CHAT MESSAGE FUNCTIONS
+    // CHAT FUNCTIONS
     // ========================================
 
     function addUserMessage(text) {
         const msgDiv = document.createElement("div");
         msgDiv.className = "message user-message";
-        msgDiv.innerHTML = `<i class="fas fa-user-circle" style="margin-right: 8px;"></i>${text}`;
+        msgDiv.innerHTML = `<i class="fas fa-user-circle"></i> ${text}`;
         chatBox.appendChild(msgDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
-        messageCount++;
-        
-        console.log("📤 User sent message:", text);
     }
 
     function addBotMessage(text) {
         const msgDiv = document.createElement("div");
         msgDiv.className = "message bot-message";
-        msgDiv.innerHTML = `<i class="fas fa-robot" style="margin-right: 8px;"></i>${text}`;
+        msgDiv.innerHTML = `<i class="fas fa-robot"></i> ${text}`;
         chatBox.appendChild(msgDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
         
-        console.log("📥 Bot responded:", text);
-        
-        // After bot message appears, show random response robot for 2 seconds, then return to idle
-        showRandomResponseRobot();
+        showTalkingRobot();
         setTimeout(() => {
             if (!isWaitingForResponse) {
                 showMainRobot();
@@ -151,8 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         chatBox.appendChild(typingDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
-        
-        // Show thinking GIF (SECOND - IMG_3241.gif)
         showThinkingRobot();
     }
 
@@ -161,19 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typing) typing.remove();
     }
 
-<<<<<<< HEAD:frontend/script.js
-    // ===== CHANGED: This is the REAL function that calls your backend =====
-=======
-    // ========================================
-    // AI RESPONSE SIMULATION
-    // ========================================
-
->>>>>>> b423bd3 (Updated UI and added animations):script.js
     async function getAIResponse(userMessage) {
-        showTyping(); // Triggers IMG_3241.gif (thinking state)
+        showTyping();
         
         try {
-            // Call your backend!
             const response = await fetch('http://localhost:5000/chat', {
                 method: 'POST',
                 headers: {
@@ -181,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 body: JSON.stringify({
                     message: userMessage,
-                    mode: currentMode,  // 'chat' or 'translate'
+                    mode: currentMode,
                     session_id: sessionId
                 })
             });
@@ -193,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return "oop— something broke fr fr 😭 try again bestie!";
             }
             
-            return data.response;  // Real GenZ response from your backend!
+            return data.response;
             
         } catch (error) {
             console.error('Error:', error);
@@ -201,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return "yo my brain's buffering rn bestie 💀 is the backend running?";
         }
     }
-    // =========================================================================
 
     async function sendMessage() {
         const text = input.value.trim();
@@ -215,57 +168,23 @@ document.addEventListener("DOMContentLoaded", () => {
         
         addUserMessage(text);
         input.value = "";
-        
-        // Reset to main robot after user sends message
         showMainRobot();
         
-        // Get AI response - this will trigger thinking robot (IMG_3241.gif)
         const response = await getAIResponse(text);
-        addBotMessage(response); // This will show random response (talking OR ok), then return to main
+        addBotMessage(response);
     }
-
-    // ========================================
-    // INPUT FIELD TYPING DETECTION
-    // ========================================
-
-    // User is typing - no GIF change while typing, keep current state
-    input.addEventListener("input", () => {
-        clearTimeout(typingTimer);
-        
-        // Only show main robot if not waiting for response and input becomes empty
-        if (!isWaitingForResponse && input.value.length === 0) {
-            typingTimer = setTimeout(() => {
-                showMainRobot();
-            }, 500);
-        }
-    });
-
-    // When input loses focus, return to main if not waiting and input is empty
-    input.addEventListener("blur", () => {
-        clearTimeout(typingTimer);
-        if (!isWaitingForResponse && input.value.length === 0) {
-            setTimeout(() => {
-                showMainRobot();
-            }, 300);
-        }
-    });
-
-    // When input gains focus, don't change state (keep current)
-    input.addEventListener("focus", () => {
-        clearTimeout(typingTimer);
-    });
 
     // ========================================
     // MODE MANAGEMENT
     // ========================================
 
     function startMode(mode) {
+        console.log("Starting mode:", mode);
         currentMode = mode;
         
         modeScreen.style.display = "none";
         chatUI.style.display = "flex";
         
-        // Update mode indicator
         if (mode === "chat") {
             modeIndicator.innerHTML = "🔥 Chat Mode Active";
             floatingTag.innerHTML = `<span class="tag-icon">💬</span>
@@ -277,13 +196,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         chatBox.innerHTML = "";
-        showMainRobot(); // Start with Six_Seven.gif (FIRST)
+        showMainRobot();
         
         const welcomeMessage = mode === "chat" 
             ? "hey bestie! what's on your mind? 👀✨"
             : "drop some text and i'll make it gen z approved! 💅";
         
-        // Add welcome message and briefly show random response robot
         setTimeout(() => {
             addBotMessage(welcomeMessage);
         }, 500);
@@ -296,26 +214,54 @@ document.addEventListener("DOMContentLoaded", () => {
         chatBox.innerHTML = "";
         input.value = "";
         isWaitingForResponse = false;
-        showMainRobot(); // Reset to main robot
+        showMainRobot();
     }
 
     // ========================================
     // EVENT LISTENERS
     // ========================================
 
-    chatModeBtn.addEventListener("click", () => startMode("chat"));
-    translateModeBtn.addEventListener("click", () => startMode("translate"));
+    chatModeBtn.addEventListener("click", function() {
+        console.log("Chat button clicked!");
+        startMode("chat");
+    });
+    
+    translateModeBtn.addEventListener("click", function() {
+        console.log("Translate button clicked!");
+        startMode("translate");
+    });
+    
     sendBtn.addEventListener("click", sendMessage);
     backBtn.addEventListener("click", goBackHome);
 
-    input.addEventListener("keydown", (e) => {
+    input.addEventListener("keydown", function(e) {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             sendMessage();
         }
     });
 
-    // Add shake animation for empty input
+    // Input typing detection
+    input.addEventListener("input", function() {
+        clearTimeout(typingTimer);
+        
+        if (!isWaitingForResponse && input.value.length === 0) {
+            typingTimer = setTimeout(() => {
+                showMainRobot();
+            }, 500);
+        }
+    });
+
+    input.addEventListener("blur", function() {
+        clearTimeout(typingTimer);
+        if (!isWaitingForResponse && input.value.length === 0) {
+            setTimeout(() => {
+                showMainRobot();
+            }, 300);
+        }
+    });
+
+    // Add shake animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes shake {
@@ -326,6 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.head.appendChild(style);
 
-    // Initialize with main robot
-    console.log("🚀 Initialization complete - Default state: Six_Seven.gif");
+    console.log("🚀 Ready - Click buttons now!");
+    showMainRobot();
 });
