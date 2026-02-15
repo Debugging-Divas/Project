@@ -36,38 +36,44 @@ body {
     filter: brightness(1.05) contrast(1.05);
 }
 
-/* Animated Golden Title */
+/* Centered Title Container */
 .title-container {
     position: absolute;
-    top: 3rem;
-    left: 3rem;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     z-index: 10;
-    animation: slideInTitle 1s ease-out;
+    width: 100%;
+    animation: titleFloatDown 0.8s ease-out;
 }
 
-@keyframes slideInTitle {
+@keyframes titleFloatDown {
     0% {
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translate(-50%, -50px);
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate(-50%, 0);
     }
 }
 
+/* Green Neon Title */
 .glitch-title {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 800;
-    color: #FFD700;
+    color: #39FF14;
     text-shadow: 
-        0 0 10px #FFD700,
-        0 0 20px #FFA500,
-        0 0 30px #FF8C00,
-        2px 2px 0 #FF4500;
-    letter-spacing: 2px;
-    animation: glitch 3s infinite, popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        0 0 10px #39FF14,
+        0 0 20px #00FF00,
+        0 0 30px #32CD32,
+        0 0 40px #228B22,
+        3px 3px 0 #006400;
+    letter-spacing: 4px;
+    animation: greenGlitch 3s infinite, popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: relative;
+    margin-bottom: 1rem;
 }
 
 @keyframes popIn {
@@ -81,48 +87,61 @@ body {
     }
 }
 
-@keyframes glitch {
+@keyframes greenGlitch {
     0%, 100% {
         transform: skew(0deg);
         text-shadow: 
-            0 0 10px #FFD700,
-            0 0 20px #FFA500,
-            0 0 30px #FF8C00,
-            2px 2px 0 #FF4500;
+            0 0 10px #39FF14,
+            0 0 20px #00FF00,
+            0 0 30px #32CD32,
+            0 0 40px #228B22,
+            3px 3px 0 #006400;
     }
     95% {
         transform: skew(2deg);
         text-shadow: 
-            -2px -2px 0 #FF4500,
-            2px 2px 0 #FFD700,
-            0 0 20px #FFA500;
+            -3px -3px 0 #006400,
+            3px 3px 0 #39FF14,
+            0 0 20px #00FF00,
+            0 0 40px #32CD32;
     }
     96% {
         transform: skew(-2deg);
         text-shadow: 
-            2px -2px 0 #FF4500,
-            -2px 2px 0 #FFD700,
-            0 0 30px #FF8C00;
+            3px -3px 0 #006400,
+            -3px 3px 0 #39FF14,
+            0 0 30px #32CD32,
+            0 0 50px #228B22;
     }
     97% {
         transform: skew(0deg);
     }
 }
 
+/* Tagline with Grey Frame */
 .tagline-pop {
-    font-size: 1.2rem;
-    color: #FFE4B5;
+    font-size: 1.4rem;
+    color: #FFFFFF;
     font-style: italic;
-    margin-top: 0.5rem;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    margin-top: 1rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     animation: fadeInTag 1.2s ease-out;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    background: rgba(50, 50, 50, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeInTag {
     0% {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
@@ -130,33 +149,56 @@ body {
     }
 }
 
-/* Centered Buttons Container */
+/* Centered Buttons Container - Lower on the mat */
 .buttons-container {
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     justify-content: center;
     align-items: center;
-    animation: floatInButtons 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 20;
 }
 
-@keyframes floatInButtons {
+.chat-btn {
+    animation: floatFromLeft 1s ease-out;
+}
+
+.translate-btn {
+    animation: floatFromRight 1s ease-out;
+}
+
+@keyframes floatFromLeft {
     0% {
         opacity: 0;
-        transform: translateY(100px) scale(0.5);
+        transform: translateX(-100px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateX(0);
+    }
+}
+
+@keyframes floatFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
 /* Gold Buttons */
 .gold-btn {
     position: relative;
-    padding: 1.2rem 2.5rem;
+    padding: 1.3rem 3rem;
     border: none;
-    border-radius: 50px;
-    font-size: 1.3rem;
+    border-radius: 60px;
+    font-size: 1.4rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -166,9 +208,9 @@ body {
     background: linear-gradient(145deg, #FFD700, #FFA500);
     color: #2C1810;
     box-shadow: 
-        0 10px 25px rgba(255, 215, 0, 0.3),
+        0 15px 30px rgba(255, 215, 0, 0.4),
         0 0 0 2px rgba(255, 215, 0, 0.3) inset,
-        0 0 30px rgba(255, 140, 0, 0.5);
+        0 0 40px rgba(255, 140, 0, 0.6);
     overflow: hidden;
     animation: buttonPulse 2s infinite;
 }
@@ -176,15 +218,15 @@ body {
 @keyframes buttonPulse {
     0%, 100% {
         box-shadow: 
-            0 10px 25px rgba(255, 215, 0, 0.3),
+            0 15px 30px rgba(255, 215, 0, 0.4),
             0 0 0 2px rgba(255, 215, 0, 0.3) inset,
-            0 0 30px rgba(255, 140, 0, 0.5);
+            0 0 40px rgba(255, 140, 0, 0.6);
     }
     50% {
         box-shadow: 
-            0 15px 35px rgba(255, 215, 0, 0.5),
+            0 20px 40px rgba(255, 215, 0, 0.6),
             0 0 0 3px rgba(255, 215, 0, 0.5) inset,
-            0 0 50px rgba(255, 140, 0, 0.8);
+            0 0 60px rgba(255, 140, 0, 0.9);
     }
 }
 
@@ -197,17 +239,17 @@ body {
 }
 
 .gold-btn i {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #2C1810;
     transition: transform 0.3s ease;
 }
 
 .gold-btn:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-8px) scale(1.05);
     box-shadow: 
-        0 20px 40px rgba(255, 215, 0, 0.4),
+        0 25px 45px rgba(255, 215, 0, 0.5),
         0 0 0 3px #FFE4B5 inset,
-        0 0 60px rgba(255, 140, 0, 0.8);
+        0 0 70px rgba(255, 140, 0, 0.9);
 }
 
 .gold-btn:hover i {
@@ -215,7 +257,7 @@ body {
 }
 
 .gold-btn:active {
-    transform: translateY(0) scale(0.95);
+    transform: translateY(-2px) scale(0.98);
 }
 
 .btn-glow {
@@ -389,8 +431,12 @@ body {
     object-fit: contain;
     transition: all 0.3s ease;
     border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
+/* FIRST - Six_Seven.gif - Main/Idle state */
 .main-robot {
     filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
     animation: mainRobotFloat 4s ease-in-out infinite;
@@ -402,16 +448,7 @@ body {
     75% { transform: translateY(5px) rotate(-1deg); }
 }
 
-.talking-robot {
-    filter: drop-shadow(0 0 30px rgba(255, 140, 0, 0.5));
-    animation: talking 0.3s infinite;
-}
-
-@keyframes talking {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-}
-
+/* SECOND - IMG_3241.gif - Thinking/Processing (when AI is thinking) */
 .thinking-robot {
     filter: drop-shadow(0 0 30px rgba(255, 100, 0, 0.6));
     animation: thinking 1s infinite;
@@ -426,6 +463,28 @@ body {
         transform: scale(1.08);
         filter: drop-shadow(0 0 50px rgba(255, 140, 0, 0.8));
     }
+}
+
+/* THIRD - IMG_3206.gif - Talking/Responding (random response option 1) */
+.talking-robot {
+    filter: drop-shadow(0 0 30px rgba(255, 140, 0, 0.5));
+    animation: talking 0.3s infinite;
+}
+
+@keyframes talking {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* FOURTH - A_ok.gif - OK reaction (random response option 2) */
+.ok-robot {
+    filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.5));
+    animation: okBounce 0.5s ease-in-out infinite;
+}
+
+@keyframes okBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(5deg); }
 }
 
 .thinking-indicator {
@@ -559,7 +618,6 @@ body {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Message Styles */
 .message {
     max-width: 80%;
     padding: 1rem 1.5rem;
@@ -612,7 +670,6 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* Input Section */
 .input-section {
     display: flex;
     gap: 1rem;
@@ -661,17 +718,16 @@ body {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .title-container {
-        top: 2rem;
-        left: 2rem;
+        top: 20%;
     }
 
     .glitch-title {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
 
     .buttons-container {
-        flex-direction: column;
-        gap: 1rem;
+        bottom: 20%;
+        gap: 2rem;
     }
 
     .gold-btn {
@@ -708,5 +764,31 @@ body {
     .chat-section {
         width: 100%;
         height: 65%;
+    }
+}
+
+@media (max-width: 480px) {
+    .glitch-title {
+        font-size: 2.5rem;
+    }
+
+    .tagline-pop {
+        font-size: 1rem;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        gap: 1rem;
+        width: 80%;
+    }
+
+    .gold-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .message {
+        max-width: 90%;
+        font-size: 0.9rem;
     }
 }

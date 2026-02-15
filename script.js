@@ -1,11 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✨ Delulu Core Loaded");
 
-    // ===== ADDED: Session management =====
-    let sessionId = localStorage.getItem('genzSessionId') || 'user_' + Date.now();
-    localStorage.setItem('genzSessionId', sessionId);
-    // ====================================
-
     // DOM Elements
     const modeScreen = document.getElementById("modeScreen");
     const chatUI = document.getElementById("chatUI");
@@ -29,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentMode = null;
     let typingTimer;
     let messageCount = 0;
-    let isWaitingForResponse = false;  // Already exists, keep it
+    let isWaitingForResponse = false;
 
     // Floating tag messages
     const tagMessages = [
@@ -161,47 +156,45 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typing) typing.remove();
     }
 
-<<<<<<< HEAD:frontend/script.js
-    // ===== CHANGED: This is the REAL function that calls your backend =====
-=======
     // ========================================
     // AI RESPONSE SIMULATION
     // ========================================
 
->>>>>>> b423bd3 (Updated UI and added animations):script.js
     async function getAIResponse(userMessage) {
         showTyping(); // Triggers IMG_3241.gif (thinking state)
         
-        try {
-            // Call your backend!
-            const response = await fetch('http://localhost:5000/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: userMessage,
-                    mode: currentMode,  // 'chat' or 'translate'
-                    session_id: sessionId
-                })
-            });
-            
-            const data = await response.json();
-            removeTyping();
-            
-            if (data.error) {
-                return "oop— something broke fr fr 😭 try again bestie!";
-            }
-            
-            return data.response;  // Real GenZ response from your backend!
-            
-        } catch (error) {
-            console.error('Error:', error);
-            removeTyping();
-            return "yo my brain's buffering rn bestie 💀 is the backend running?";
-        }
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                removeTyping();
+                
+                if (currentMode === "chat") {
+                    const responses = [
+                        "omg tell me more bestie! 👀",
+                        "that's so valid actually ✨",
+                        "the way I— 💀",
+                        "I'm screaming 💅",
+                        "the vibes are immaculate fr",
+                        "not you saying that 💀",
+                        "say it louder for the people in the back 📢",
+                        "this ain't it chief 🗿",
+                        "oh you're one of THOSE besties",
+                        "🐍 delulu core energy fr"
+                    ];
+                    resolve(responses[Math.floor(Math.random() * responses.length)]);
+                } else {
+                    const translations = [
+                        `"${userMessage}" but make it iconic fr fr`,
+                        `bestie said "${userMessage}" and I oop—`,
+                        `✨ genzified: "${userMessage}" no cap`,
+                        `translation: ${userMessage} (iykyk)`,
+                        `"${userMessage}" - sent from my iphone 💅`,
+                        `🐍 delulu version: ${userMessage}`
+                    ];
+                    resolve(translations[Math.floor(Math.random() * translations.length)]);
+                }
+            }, 2000);
+        });
     }
-    // =========================================================================
 
     async function sendMessage() {
         const text = input.value.trim();
